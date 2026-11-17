@@ -1,0 +1,17 @@
+[Unit]
+Description=Public Cloudflare link to the Crop Health console
+After=network-online.target crop-console.service
+Wants=network-online.target
+
+[Service]
+User=drones
+Group=drones
+Environment=HOME=/home/drones
+# Never expose the console publicly without a password.
+ExecStartPre=/usr/bin/test -s /home/drones/.config/crop-console/password
+ExecStart=/usr/bin/cloudflared tunnel --no-autoupdate --url http://localhost:8000
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

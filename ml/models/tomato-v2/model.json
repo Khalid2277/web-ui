@@ -1,0 +1,169 @@
+{
+  "name": "tomato-v2",
+  "version": "2026.10.31",
+  "classes": [
+    "bacterial_spot",
+    "early_blight",
+    "late_blight",
+    "leaf_mold",
+    "septoria_leaf_spot",
+    "spider_mites",
+    "target_spot",
+    "yellow_leaf_curl_virus",
+    "mosaic_virus",
+    "healthy",
+    "leaf_miner",
+    "spotted_wilt_virus",
+    "magnesium_deficiency",
+    "nitrogen_deficiency",
+    "potassium_deficiency",
+    "no_tomato_leaf"
+  ],
+  "classifier": {
+    "architecture": "mobilenetv3_large_100.ra_in1k",
+    "input_size": 224,
+    "mean": [
+      0.485,
+      0.456,
+      0.406
+    ],
+    "std": [
+      0.229,
+      0.224,
+      0.225
+    ],
+    "temperature": 0.7268,
+    "uncertain_below": 0.7,
+    "onnx_max_abs_diff_vs_pytorch": 3.5762786865234375e-06
+  },
+  "detector": {
+    "architecture": "YOLO11n (class-agnostic leaf)",
+    "input_size": 480,
+    "conf": 0.35,
+    "iou": 0.5,
+    "max_leaves": 8,
+    "val": {
+      "mAP50": 0.9305925024869838,
+      "mAP50_95": 0.7051910305557587,
+      "precision": 0.8286247168976735,
+      "recall": 0.8938053097345132
+    }
+  },
+  "metrics": {
+    "held_out_field_test": {
+      "n": 1903,
+      "leaf_images": 868,
+      "negative_images": 1035,
+      "field_accuracy": 0.8168202764976958,
+      "field_macro_f1": 0.8074599719803308,
+      "no_leaf_recall": 0.8347826086956521,
+      "false_disease_rate_on_negatives": 0.15555555555555556,
+      "missed_leaf_rate": 0.010368663594470046,
+      "per_class_f1": {
+        "bacterial_spot": 0.374,
+        "early_blight": 0.757,
+        "late_blight": 0.772,
+        "leaf_mold": 0.631,
+        "septoria_leaf_spot": 0.507,
+        "yellow_leaf_curl_virus": 0.757,
+        "mosaic_virus": 0.55,
+        "healthy": 0.667,
+        "leaf_miner": 0.929,
+        "spotted_wilt_virus": 0.824,
+        "magnesium_deficiency": 0.974,
+        "nitrogen_deficiency": 0.961,
+        "potassium_deficiency": 1.0
+      },
+      "accuracy_by_source": {
+        "drone_camera": 0.988,
+        "imagenette": 1.0,
+        "plantdoc": 0.667,
+        "plantdoc_od": 0.719,
+        "plantwild": 0.734,
+        "tomato_village": 0.918
+      },
+      "with_uncertain_state": {
+        "threshold": 0.7,
+        "coverage": 0.8387096524238586,
+        "accuracy_when_answered": 0.8887362480163574
+      },
+      "ece_before": 0.07856349647045135,
+      "ece_after": 0.04740935191512108
+    },
+    "lab_test_accuracy": 0.9767184257507324,
+    "val_threshold_table": [
+      {
+        "threshold": 0.3,
+        "coverage": 0.9971975684165955,
+        "accuracy_when_answered": 0.9016393423080444
+      },
+      {
+        "threshold": 0.4,
+        "coverage": 0.986922025680542,
+        "accuracy_when_answered": 0.9062943458557129
+      },
+      {
+        "threshold": 0.5,
+        "coverage": 0.9654366970062256,
+        "accuracy_when_answered": 0.9187228083610535
+      },
+      {
+        "threshold": 0.6,
+        "coverage": 0.9350770711898804,
+        "accuracy_when_answered": 0.931568443775177
+      },
+      {
+        "threshold": 0.7,
+        "coverage": 0.9037832617759705,
+        "accuracy_when_answered": 0.9421188831329346
+      },
+      {
+        "threshold": 0.8,
+        "coverage": 0.8659504652023315,
+        "accuracy_when_answered": 0.953613817691803
+      }
+    ]
+  },
+  "teacher": {
+    "model": "vit_large_patch14_dinov2.lvd142m",
+    "res": 448,
+    "test_field": {
+      "n": 1903,
+      "leaf_images": 868,
+      "negative_images": 1035,
+      "field_accuracy": 0.8709677419354839,
+      "field_macro_f1": 0.8563670491959972,
+      "no_leaf_recall": 0.9642512077294686,
+      "false_disease_rate_on_negatives": 0.034782608695652174,
+      "missed_leaf_rate": 0.01728110599078341,
+      "per_class_f1": {
+        "bacterial_spot": 0.525,
+        "early_blight": 0.863,
+        "late_blight": 0.909,
+        "leaf_mold": 0.752,
+        "septoria_leaf_spot": 0.679,
+        "yellow_leaf_curl_virus": 0.874,
+        "mosaic_virus": 0.708,
+        "healthy": 0.772,
+        "leaf_miner": 0.986,
+        "spotted_wilt_virus": 0.916,
+        "magnesium_deficiency": 0.989,
+        "nitrogen_deficiency": 0.961,
+        "potassium_deficiency": 1.0
+      },
+      "accuracy_by_source": {
+        "drone_camera": 0.988,
+        "imagenette": 1.0,
+        "plantdoc": 0.754,
+        "plantdoc_od": 0.791,
+        "plantwild": 0.919,
+        "tomato_village": 0.967
+      }
+    }
+  },
+  "training_data": "PlantVillage (lab) + PlantDoc, Tomato-Village, PlantWild (field) + drone-camera and everyday-object negatives",
+  "lab_only_classes": [
+    "spider_mites",
+    "target_spot"
+  ]
+}

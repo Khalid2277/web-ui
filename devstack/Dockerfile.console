@@ -1,0 +1,6 @@
+# Mac/Linux developer image for the farm command center (the Pi runs it natively).
+FROM python:3.11-slim
+RUN pip install --no-cache-dir "flask==2.2.5" "werkzeug<3" "pymavlink==2.4.49" \
+        "opencv-python-headless==4.10.0.84" "numpy<2" pytest
+WORKDIR /app
+CMD ["python3", "raspberry_pi/dashboard/app.py"]

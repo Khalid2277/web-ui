@@ -1,0 +1,8 @@
+#!/bin/sh
+# Print the console's current public link (it changes whenever the tunnel restarts).
+if [ "$(systemctl is-active crop-tunnel)" != "active" ]; then
+    echo "The public tunnel is not running. Start it with: sudo systemctl start crop-tunnel"
+    exit 1
+fi
+url=$(journalctl -u crop-tunnel -o cat --no-pager -n 300 | grep -o 'https://[a-z0-9-]*\.trycloudflare\.com' | tail -1)
+echo "${url:-The tunnel is starting; try again in a few seconds.}"

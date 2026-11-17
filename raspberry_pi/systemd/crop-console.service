@@ -1,0 +1,15 @@
+[Unit]
+Description=Crop Health mission console (live camera, AI diagnosis, telemetry)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+User=drones
+Group=drones
+WorkingDirectory=/home/drones/disease-detection
+ExecStart=/usr/bin/python3 /home/drones/disease-detection/raspberry_pi/dashboard/app.py
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
